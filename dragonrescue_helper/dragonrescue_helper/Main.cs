@@ -61,6 +61,7 @@ namespace dragonrescue_helper
             richTextBox_log.Text += "Program path: " + current_dir + "\n";
             //getting files list in current directory
             files = Directory.GetFiles(current_dir);
+            files = Directory.GetFiles(current_dir);
 
             //going through files list
             foreach (string file in files)
@@ -450,7 +451,7 @@ namespace dragonrescue_helper
                 foreach (string file in files)
                 {
                     //looking for viking xml file
-                    if (file.Contains("GetDetailedChildList.xml") == true)
+                    if (file.Contains("GetDetailedChildList.xml") == true || file.Contains("VikingProfileData.xml") == true)
                     {
                         //adding it's path to comboBox
                         comboBox_xml.Items.Add(file);
