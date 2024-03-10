@@ -97,10 +97,10 @@ namespace dragonrescue_helper
                 {
                     //download zip from RPaciorek's github repo
                     WebClient Client = new WebClient();
-                    Client.DownloadFile("https://github.com/rpaciorek/dragonrescue-import/releases/download/v0.4.0/dragonrescue-import--win-x86_0.4.0.zip", "dragonrescue-import--win-x86_0.4.0.zip");
+                    Client.DownloadFile("https://github.com/SoDOff-Project/dragonrescue/releases/download/v0.6.0/dragonrescue-import--win-x86_0.6.0.zip", "dragonrescue-import--win-x86_0.6.0.zip");
 
                     //read zip contents
-                    byte[] zip = ReadFile(Directory.GetCurrentDirectory() + @"\dragonrescue-import--win-x86_0.4.0.zip");
+                    byte[] zip = ReadFile(Directory.GetCurrentDirectory() + @"\dragonrescue-import--win-x86_0.6.0.zip");
                     MemoryStream memzip = new MemoryStream();
                     memzip.Write(zip, 0, zip.Length);
                     ZipArchive archive = new ZipArchive(memzip);
@@ -109,9 +109,9 @@ namespace dragonrescue_helper
                     foreach (ZipArchiveEntry entry in archive.Entries)
                     {
                         Stream unzippedEntryStream = entry.Open();
-                        if (entry.FullName != "dragonrescue-import--win-x86_0.4.0/")
+                        if (entry.FullName != "dragonrescue-import--win-x86_0.6.0/")
                         {
-                            using (Stream file = File.Create(entry.FullName.Replace("dragonrescue-import--win-x86_0.4.0/", "")))
+                            using (Stream file = File.Create(entry.FullName.Replace("dragonrescue-import--win-x86_0.6.0/", "")))
                             {
                                 CopyStream(unzippedEntryStream, file);
                             }
