@@ -61,7 +61,6 @@ namespace dragonrescue_helper
             richTextBox_log.Text += "Program path: " + current_dir + "\n";
             //getting files list in current directory
             files = Directory.GetFiles(current_dir);
-            files = Directory.GetFiles(current_dir);
 
             //going through files list
             foreach (string file in files)
@@ -225,6 +224,33 @@ namespace dragonrescue_helper
                 label_login.Text = "(Edge) Login:";
                 label_password.Text = "(Edge) Password:";
                 label_character.Text = "(Edge) Viking name:";
+
+                //check, if advanced more enabled
+                if (checkBox_advanced.Checked == true)
+                {
+                    //write override.ini
+                    WriteOverride(config_path);
+                }
+            }
+        }
+
+        private void radioButton_guild_CheckedChanged(object sender, EventArgs e)
+        {
+            //if server been set to Riders Guild
+            if (radioButton_guild.Checked == true)
+            {
+                //write to log
+                richTextBox_log.Text += "Server set to: Riders Guild." + "\n";
+                server = "guild";
+
+                //set server urls to Riders Guild
+                server_userapi = "https://api.ridersguild.org/";
+                server_contentapi = "https://api.ridersguild.org/";
+
+                //set labels to Riders Guild
+                label_login.Text = "(Guild) Login:";
+                label_password.Text = "(Guild) Password:";
+                label_character.Text = "(Guild) Viking name:";
 
                 //check, if advanced more enabled
                 if (checkBox_advanced.Checked == true)
@@ -469,6 +495,144 @@ namespace dragonrescue_helper
             }
         }
 
+        private void radioButton_stables_CheckedChanged(object sender, EventArgs e)
+        {
+            //if import data was set to Stables
+            if (radioButton_stables.Checked == true)
+            {
+                //writing to log
+                richTextBox_log.Text += "Import mode set to: stables." + "\n";
+
+                //set import data to stables
+                import_data = "stables";
+
+                //clean elements in comboBox
+                comboBox_xml.Items.Clear();
+                comboBox_xml.Text = "";
+
+                //check, if advanced mode is disabled
+                if (checkBox_advanced.Checked == false)
+                {
+                    //then use current directory for profile import path
+                    import_dir = current_dir + @"\";
+                }
+
+                //getting files list, including subdirectories
+                files = Directory.GetFiles(import_dir, "*.*", SearchOption.AllDirectories);
+                //going through files list
+                foreach (string file in files)
+                {
+                    //looking for stables xml file
+                    if (file.Contains("Stables.xml") == true)
+                    {
+                        //adding it's path to comboBox
+                        comboBox_xml.Items.Add(file);
+                        //writing to log
+                        richTextBox_log.Text += file + " file added." + "\n";
+                    }
+                }
+
+                //check, if advanced more enabled
+                if (checkBox_advanced.Checked == true)
+                {
+                    //write override.ini
+                    WriteOverride(config_path);
+                }
+            }
+        }
+
+        private void radioButton_farm_CheckedChanged(object sender, EventArgs e)
+        {
+            //if import data was set to Farm
+            if (radioButton_farm.Checked == true)
+            {
+                //writing to log
+                richTextBox_log.Text += "Import mode set to: farm." + "\n";
+
+                //set import data to farm
+                import_data = "farm";
+
+                //clean elements in comboBox
+                comboBox_xml.Items.Clear();
+                comboBox_xml.Text = "";
+
+                //check, if advanced mode is disabled
+                if (checkBox_advanced.Checked == false)
+                {
+                    //then use current directory for profile import path
+                    import_dir = current_dir + @"\";
+                }
+
+                //getting files list, including subdirectories
+                files = Directory.GetFiles(import_dir, "*.*", SearchOption.AllDirectories);
+                //going through files list
+                foreach (string file in files)
+                {
+                    //looking for farm xml file
+                    if (file.Contains("GetUserRoomList.xml") == true)
+                    {
+                        //adding it's path to comboBox
+                        comboBox_xml.Items.Add(file);
+                        //writing to log
+                        richTextBox_log.Text += file + " file added." + "\n";
+                    }
+                }
+
+                //check, if advanced more enabled
+                if (checkBox_advanced.Checked == true)
+                {
+                    //write override.ini
+                    WriteOverride(config_path);
+                }
+            }
+        }
+
+        private void radioButton_hideout_CheckedChanged(object sender, EventArgs e)
+        {
+            //if import data was set to Hideout
+            if (radioButton_hideout.Checked == true)
+            {
+                //writing to log
+                richTextBox_log.Text += "Import mode set to: hideout." + "\n";
+
+                //set import data to farm
+                import_data = "hideout";
+
+                //clean elements in comboBox
+                comboBox_xml.Items.Clear();
+                comboBox_xml.Text = "";
+
+                //check, if advanced mode is disabled
+                if (checkBox_advanced.Checked == false)
+                {
+                    //then use current directory for profile import path
+                    import_dir = current_dir + @"\";
+                }
+
+                //getting files list, including subdirectories
+                files = Directory.GetFiles(import_dir, "*.*", SearchOption.AllDirectories);
+                //going through files list
+                foreach (string file in files)
+                {
+                    //looking for hideout xml file
+                    if (file.Contains("GetUserItemPositions_MyRoomINT.xml") == true)
+                    {
+                        //adding it's path to comboBox
+                        comboBox_xml.Items.Add(file);
+                        //writing to log
+                        richTextBox_log.Text += file + " file added." + "\n";
+                    }
+                }
+
+                //check, if advanced more enabled
+                if (checkBox_advanced.Checked == true)
+                {
+                    //write override.ini
+                    WriteOverride(config_path);
+                }
+            }
+        }
+
         private void comboBox_xml_SelectedIndexChanged(object sender, EventArgs e)
         {
             //storing xml file path from comboBox
@@ -567,6 +731,69 @@ namespace dragonrescue_helper
                     exportProcess.WaitForExit();
                     richTextBox_log.Text += "[Import] dragonrescue-import process finished it's job." + "\n";
                 }
+                //if import data set to stables
+                else if (radioButton_stables.Checked == true)
+                {
+                    richTextBox_log.Text += "[Import] importing data: stables." + "\n";
+
+                    //creating process for dragonrescue-import tool
+                    Process exportProcess = new Process();
+                    richTextBox_log.Text += "[Import] creating new process: " + "\n";
+                    //setting path to tool
+                    exportProcess.StartInfo.FileName = tool_path;
+                    richTextBox_log.Text += "[Import] tool path: " + tool_path + "\n";
+                    //passing argumnents for import stables xml
+                    exportProcess.StartInfo.Arguments = "--userApiUrl=" + server_userapi + " --contentApiUrl=" + server_contentapi + " --username=" + textBox_login.Text + " --password=" + textBox_password.Text + " --viking=" + textBox_character.Text + " import --file " + import_path + " --mode=stables";
+                    richTextBox_log.Text += "[Import] using arguments: " + "--userApiUrl=" + server_userapi + " --contentApiUrl=" + server_contentapi + " --username=[REDACTED] --password=[REDACTED] --viking=[REDACTED] import --file " + import_path + " --mode=stables" + "\n";
+                    //starting process
+                    exportProcess.Start();
+                    richTextBox_log.Text += "[Import] starting dragonrescue-import process." + "\n";
+                    //wait, until it finishes
+                    exportProcess.WaitForExit();
+                    richTextBox_log.Text += "[Import] dragonrescue-import process finished it's job." + "\n";
+                }
+                //if import data set to farm
+                else if (radioButton_farm.Checked == true)
+                {
+                    richTextBox_log.Text += "[Import] importing data: farm." + "\n";
+
+                    //creating process for dragonrescue-import tool
+                    Process exportProcess = new Process();
+                    richTextBox_log.Text += "[Import] creating new process: " + "\n";
+                    //setting path to tool
+                    exportProcess.StartInfo.FileName = tool_path;
+                    richTextBox_log.Text += "[Import] tool path: " + tool_path + "\n";
+                    //passing argumnents for import farm xml
+                    exportProcess.StartInfo.Arguments = "--userApiUrl=" + server_userapi + " --contentApiUrl=" + server_contentapi + " --username=" + textBox_login.Text + " --password=" + textBox_password.Text + " --viking=" + textBox_character.Text + " import --file " + import_path + " --mode=farm";
+                    richTextBox_log.Text += "[Import] using arguments: " + "--userApiUrl=" + server_userapi + " --contentApiUrl=" + server_contentapi + " --username=[REDACTED] --password=[REDACTED] --viking=[REDACTED] import --file " + import_path + " --mode=farm" + "\n";
+                    //starting process
+                    exportProcess.Start();
+                    richTextBox_log.Text += "[Import] starting dragonrescue-import process." + "\n";
+                    //wait, until it finishes
+                    exportProcess.WaitForExit();
+                    richTextBox_log.Text += "[Import] dragonrescue-import process finished it's job." + "\n";
+                }
+                //if import data set to hideout
+                else if (radioButton_hideout.Checked == true)
+                {
+                    richTextBox_log.Text += "[Import] importing data: hideout." + "\n";
+
+                    //creating process for dragonrescue-import tool
+                    Process exportProcess = new Process();
+                    richTextBox_log.Text += "[Import] creating new process: " + "\n";
+                    //setting path to tool
+                    exportProcess.StartInfo.FileName = tool_path;
+                    richTextBox_log.Text += "[Import] tool path: " + tool_path + "\n";
+                    //passing argumnents for import hideout xml
+                    exportProcess.StartInfo.Arguments = "--userApiUrl=" + server_userapi + " --contentApiUrl=" + server_contentapi + " --username=" + textBox_login.Text + " --password=" + textBox_password.Text + " --viking=" + textBox_character.Text + " import --file " + import_path + " --mode=hideout";
+                    richTextBox_log.Text += "[Import] using arguments: " + "--userApiUrl=" + server_userapi + " --contentApiUrl=" + server_contentapi + " --username=[REDACTED] --password=[REDACTED] --viking=[REDACTED] import --file " + import_path + " --mode=hideout" + "\n";
+                    //starting process
+                    exportProcess.Start();
+                    richTextBox_log.Text += "[Import] starting dragonrescue-import process." + "\n";
+                    //wait, until it finishes
+                    exportProcess.WaitForExit();
+                    richTextBox_log.Text += "[Import] dragonrescue-import process finished it's job." + "\n";
+                }
             }
             //show error message, in case if something is not set
             else if (tool_path != "" && server_selected == 0 || login_entered == 0 || import_selected == 0)
@@ -650,6 +877,9 @@ namespace dragonrescue_helper
                 radioButton_dragons.Checked = false;
                 radioButton_inventory.Checked = false;
                 radioButton_viking.Checked = false;
+                radioButton_stables.Checked = false;
+                radioButton_farm.Checked = false;
+                radioButton_hideout.Checked = false;
 
                 //clean elements in comboBox
                 comboBox_xml.Items.Clear();
@@ -755,6 +985,10 @@ namespace dragonrescue_helper
             {
                 radioButton_edge.Checked = true;
             }
+            else if (server == "guild")
+            {
+                radioButton_guild.Checked = true;
+            }
             if (import_data == "dragons")
             {
                 radioButton_dragons.Checked = true;
@@ -766,6 +1000,18 @@ namespace dragonrescue_helper
             else if (import_data == "viking")
             {
                 radioButton_viking.Checked = true;
+            }
+            else if (import_data == "stables")
+            {
+                radioButton_stables.Checked = true;
+            }
+            else if (import_data == "farm")
+            {
+                radioButton_farm.Checked = true;
+            }
+            else if (import_data == "hideout")
+            {
+                radioButton_hideout.Checked = true;
             }
         }
 

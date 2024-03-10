@@ -56,6 +56,10 @@
             this.label_log = new System.Windows.Forms.Label();
             this.checkBox_advanced = new System.Windows.Forms.CheckBox();
             this.label_about = new System.Windows.Forms.Label();
+            this.radioButton_stables = new System.Windows.Forms.RadioButton();
+            this.radioButton_farm = new System.Windows.Forms.RadioButton();
+            this.radioButton_hideout = new System.Windows.Forms.RadioButton();
+            this.radioButton_guild = new System.Windows.Forms.RadioButton();
             this.groupBox_step1.SuspendLayout();
             this.groupBox_step1_account.SuspendLayout();
             this.groupBox_step1_server.SuspendLayout();
@@ -80,7 +84,7 @@
             // 
             // button_export
             // 
-            this.button_export.Location = new System.Drawing.Point(73, 298);
+            this.button_export.Location = new System.Drawing.Point(73, 304);
             this.button_export.Name = "button_export";
             this.button_export.Size = new System.Drawing.Size(75, 23);
             this.button_export.TabIndex = 3;
@@ -96,7 +100,7 @@
             this.groupBox_step1_account.Controls.Add(this.label_password);
             this.groupBox_step1_account.Controls.Add(this.label_login);
             this.groupBox_step1_account.Controls.Add(this.label_character);
-            this.groupBox_step1_account.Location = new System.Drawing.Point(16, 132);
+            this.groupBox_step1_account.Location = new System.Drawing.Point(16, 142);
             this.groupBox_step1_account.Name = "groupBox_step1_account";
             this.groupBox_step1_account.Size = new System.Drawing.Size(200, 146);
             this.groupBox_step1_account.TabIndex = 2;
@@ -154,11 +158,12 @@
             // 
             // groupBox_step1_server
             // 
+            this.groupBox_step1_server.Controls.Add(this.radioButton_guild);
             this.groupBox_step1_server.Controls.Add(this.radioButton_edge);
             this.groupBox_step1_server.Controls.Add(this.radioButton_sodoff);
-            this.groupBox_step1_server.Location = new System.Drawing.Point(16, 83);
+            this.groupBox_step1_server.Location = new System.Drawing.Point(16, 71);
             this.groupBox_step1_server.Name = "groupBox_step1_server";
-            this.groupBox_step1_server.Size = new System.Drawing.Size(200, 42);
+            this.groupBox_step1_server.Size = new System.Drawing.Size(200, 60);
             this.groupBox_step1_server.TabIndex = 1;
             this.groupBox_step1_server.TabStop = false;
             this.groupBox_step1_server.Text = "I\'m playing on server:";
@@ -245,7 +250,7 @@
             // 
             // button_import
             // 
-            this.button_import.Location = new System.Drawing.Point(109, 157);
+            this.button_import.Location = new System.Drawing.Point(102, 164);
             this.button_import.Name = "button_import";
             this.button_import.Size = new System.Drawing.Size(75, 23);
             this.button_import.TabIndex = 2;
@@ -256,9 +261,9 @@
             // groupBox_xml
             // 
             this.groupBox_xml.Controls.Add(this.comboBox_xml);
-            this.groupBox_xml.Location = new System.Drawing.Point(23, 83);
+            this.groupBox_xml.Location = new System.Drawing.Point(16, 98);
             this.groupBox_xml.Name = "groupBox_xml";
-            this.groupBox_xml.Size = new System.Drawing.Size(259, 53);
+            this.groupBox_xml.Size = new System.Drawing.Size(262, 53);
             this.groupBox_xml.TabIndex = 1;
             this.groupBox_xml.TabStop = false;
             this.groupBox_xml.Text = "Suitable xml file to import";
@@ -274,12 +279,15 @@
             // 
             // groupBox_step2_mode
             // 
+            this.groupBox_step2_mode.Controls.Add(this.radioButton_hideout);
+            this.groupBox_step2_mode.Controls.Add(this.radioButton_farm);
+            this.groupBox_step2_mode.Controls.Add(this.radioButton_stables);
             this.groupBox_step2_mode.Controls.Add(this.radioButton_viking);
             this.groupBox_step2_mode.Controls.Add(this.radioButton_inventory);
             this.groupBox_step2_mode.Controls.Add(this.radioButton_dragons);
             this.groupBox_step2_mode.Location = new System.Drawing.Point(16, 19);
             this.groupBox_step2_mode.Name = "groupBox_step2_mode";
-            this.groupBox_step2_mode.Size = new System.Drawing.Size(266, 48);
+            this.groupBox_step2_mode.Size = new System.Drawing.Size(262, 70);
             this.groupBox_step2_mode.TabIndex = 0;
             this.groupBox_step2_mode.TabStop = false;
             this.groupBox_step2_mode.Text = "I want to import:";
@@ -353,6 +361,54 @@
             this.label_about.Text = "Dragonrescue Helper, GUI for dragonrescue-import";
             this.label_about.Click += new System.EventHandler(this.label_about_Click);
             // 
+            // radioButton_stables
+            // 
+            this.radioButton_stables.AutoSize = true;
+            this.radioButton_stables.Location = new System.Drawing.Point(7, 43);
+            this.radioButton_stables.Name = "radioButton_stables";
+            this.radioButton_stables.Size = new System.Drawing.Size(60, 17);
+            this.radioButton_stables.TabIndex = 3;
+            this.radioButton_stables.TabStop = true;
+            this.radioButton_stables.Text = "Stables";
+            this.radioButton_stables.UseVisualStyleBackColor = true;
+            this.radioButton_stables.CheckedChanged += new System.EventHandler(this.radioButton_stables_CheckedChanged);
+            // 
+            // radioButton_farm
+            // 
+            this.radioButton_farm.AutoSize = true;
+            this.radioButton_farm.Location = new System.Drawing.Point(96, 43);
+            this.radioButton_farm.Name = "radioButton_farm";
+            this.radioButton_farm.Size = new System.Drawing.Size(48, 17);
+            this.radioButton_farm.TabIndex = 4;
+            this.radioButton_farm.TabStop = true;
+            this.radioButton_farm.Text = "Farm";
+            this.radioButton_farm.UseVisualStyleBackColor = true;
+            this.radioButton_farm.CheckedChanged += new System.EventHandler(this.radioButton_farm_CheckedChanged);
+            // 
+            // radioButton_hideout
+            // 
+            this.radioButton_hideout.AutoSize = true;
+            this.radioButton_hideout.Location = new System.Drawing.Point(188, 43);
+            this.radioButton_hideout.Name = "radioButton_hideout";
+            this.radioButton_hideout.Size = new System.Drawing.Size(62, 17);
+            this.radioButton_hideout.TabIndex = 5;
+            this.radioButton_hideout.TabStop = true;
+            this.radioButton_hideout.Text = "Hideout";
+            this.radioButton_hideout.UseVisualStyleBackColor = true;
+            this.radioButton_hideout.CheckedChanged += new System.EventHandler(this.radioButton_hideout_CheckedChanged);
+            // 
+            // radioButton_guild
+            // 
+            this.radioButton_guild.AutoSize = true;
+            this.radioButton_guild.Location = new System.Drawing.Point(6, 38);
+            this.radioButton_guild.Name = "radioButton_guild";
+            this.radioButton_guild.Size = new System.Drawing.Size(82, 17);
+            this.radioButton_guild.TabIndex = 6;
+            this.radioButton_guild.TabStop = true;
+            this.radioButton_guild.Text = "Riders Guild";
+            this.radioButton_guild.UseVisualStyleBackColor = true;
+            this.radioButton_guild.CheckedChanged += new System.EventHandler(this.radioButton_guild_CheckedChanged);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -414,6 +470,10 @@
         private System.Windows.Forms.Label label_log;
         private System.Windows.Forms.CheckBox checkBox_advanced;
         private System.Windows.Forms.Label label_about;
+        private System.Windows.Forms.RadioButton radioButton_farm;
+        private System.Windows.Forms.RadioButton radioButton_stables;
+        private System.Windows.Forms.RadioButton radioButton_hideout;
+        private System.Windows.Forms.RadioButton radioButton_guild;
     }
 }
 
